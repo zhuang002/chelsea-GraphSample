@@ -15,7 +15,11 @@ public class Main {
 		graph2.load();
 		graph2.print();*/
 		
-		GraphNodeDir graph2 = new GraphNodeDir();
+		/*GraphNodeDir graph2 = new GraphNodeDir();
+		graph2.load();
+		graph2.print();*/
+		
+		GraphNodeNonDir graph2 = new GraphNodeNonDir();
 		graph2.load();
 		graph2.print();
 	}
