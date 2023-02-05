@@ -31,12 +31,31 @@ public class Main {
 		System.out.println();
 		graph1.goThroughDFS();*/
 		
-		GraphNodeNonDir graph1 = new GraphNodeNonDir();
+		/*GraphNodeNonDir graph1 = new GraphNodeNonDir();
 		graph1.load();
 		graph1.goThroughBFS();
 		System.out.println();
-		graph1.goThroughDFS();
+		graph1.goThroughDFS();*/
 		
+		/*GraphArrayNonDir graph1 = new GraphArrayNonDir();
+		graph1.load();
+		System.out.println(graph1.isConnectedBFS());
+		System.out.println(graph1.isConnectedDFS());*/
+		
+		/*GraphNodeNonDir graph1 = new GraphNodeNonDir();
+		graph1.load();
+		System.out.println(graph1.isConnectedBFS());
+		System.out.println(graph1.isConnectedDFS());*/
+		
+		GraphArrayNonDir graph1 = new GraphArrayNonDir();
+		graph1.load();
+		System.out.println(graph1.hasRingBFS());
+		System.out.println(graph1.hasRingDFS());
+		
+		GraphNodeNonDir graph2 = new GraphNodeNonDir();
+		graph2.load();
+		System.out.println(graph2.hasRingBFS());
+		System.out.println(graph2.hasRingDFS());
 	}
 
 }

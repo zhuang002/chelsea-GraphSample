@@ -55,7 +55,7 @@ public class GraphArrayNonDir {
 		return nPaths;
 	}
 
-	public void goThroughBFS() {
+	public int goThroughBFS() {
 		// TODO Auto-generated method stub
 
 		boolean[] included = new boolean[this.ar.length];
@@ -79,6 +79,13 @@ public class GraphArrayNonDir {
 			current = next;
 			next = new ArrayList<>();
 		}
+		
+		int count = 0;
+		for (int i=0;i<included.length;i++) {
+			if (included[i])
+				count ++;
+		}
+		return count;
 	}
 
 	private ArrayList<Integer> getNeighboursBFS(int id, boolean[] included) {
@@ -94,7 +101,7 @@ public class GraphArrayNonDir {
 		return neighbours;
 	}
 
-	public void goThroughDFS() {
+	public int goThroughDFS() {
 		// TODO Auto-generated method stub
 		boolean[] included = new boolean[this.ar.length];
 		for (int i=0;i<included.length;i++) {
@@ -102,6 +109,13 @@ public class GraphArrayNonDir {
 		}
 		
 		dfsFrom(0, included);
+		
+		int count = 0;
+		for (int i=0;i<included.length;i++) {
+			if (included[i])
+				count ++;
+		}
+		return count;
 	}
 
 	private void dfsFrom(int node, boolean[] included) {
@@ -124,5 +138,80 @@ public class GraphArrayNonDir {
 			}
 		}
 		return neighbours;
+	}
+
+	public boolean isConnectedBFS() {
+		// TODO Auto-generated method stub
+		int count = this.goThroughBFS();
+		if (count == this.ar.length) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isConnectedDFS() {
+		// TODO Auto-generated method stub
+		int count = this.goThroughDFS();
+		if (count == this.ar.length) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean hasRingBFS() {
+		// TODO Auto-generated method stub
+		boolean[] included = new boolean[this.ar.length];
+		for (int i=0;i<included.length;i++) {
+			included[i] = false;
+		}
+		
+		ArrayList<Integer> current = new ArrayList<>();
+		ArrayList<Integer> next = new ArrayList<>();
+		
+		current.add(0);
+		included[0] = true;
+		
+		while (!current.isEmpty()) {
+			for (int id:current) {
+				for (int nextId=id+1;nextId<this.ar.length;nextId++) {
+					if (included[nextId])
+						return true;
+					if (this.ar[id][nextId]>0) {
+						next.add(nextId);
+						included[nextId] = true;
+					}
+					
+				}
+			}
+			current = next;
+			next = new ArrayList<>();
+		}
+		return false;
+	}
+
+	public boolean hasRingDFS() {
+		// TODO Auto-generated method stub
+		boolean[] included = new boolean[this.ar.length];
+		for (int i=0;i<included.length;i++) {
+			included[i] = false;
+		}
+
+		return hasRingDFS(0, included);
+	}
+
+	private boolean hasRingDFS(int id, boolean[] included) {
+		// TODO Auto-generated method stub
+		if (included[id]) {
+			return true;
+		}
+		included[id] = true;
+		for (int nextId = id+1; nextId<this.ar.length;nextId++) {
+			if (this.ar[id][nextId]>0) {
+				if (hasRingDFS(nextId, included)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

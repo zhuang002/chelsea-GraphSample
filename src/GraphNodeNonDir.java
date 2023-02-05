@@ -46,7 +46,7 @@ public class GraphNodeNonDir {
 		return nPaths/2;
 	}
 
-	public void goThroughBFS() {
+	public int goThroughBFS() {
 		// TODO Auto-generated method stub
 		boolean[] included = new boolean[this.nodes.length];
 		for (int i=0;i<included.length;i++) {
@@ -68,6 +68,12 @@ public class GraphNodeNonDir {
 			next = new ArrayList<>();
 		}
 		
+		int count = 0;
+		for (int i=0;i<included.length;i++) {
+			if (included[i])
+				count ++;
+		}
+		return count;
 	}
 
 	private ArrayList<Node> getNeighboursBFS(Node node, boolean[] included) {
@@ -83,7 +89,7 @@ public class GraphNodeNonDir {
 		return neighbours;
 	}
 
-	public void goThroughDFS() {
+	public int goThroughDFS() {
 		// TODO Auto-generated method stub
 		boolean[] included = new boolean[this.nodes.length];
 		for (int i=0;i<included.length;i++) {
@@ -91,6 +97,13 @@ public class GraphNodeNonDir {
 		}
 		
 		dfsFrom(this.nodes[0], included);
+		
+		int count = 0;
+		for (int i=0;i<included.length;i++) {
+			if (included[i])
+				count ++;
+		}
+		return count;
 	}
 
 	private void dfsFrom(Node node, boolean[] included) {
@@ -106,5 +119,22 @@ public class GraphNodeNonDir {
 		}
 	}
 	
+	public boolean isConnectedBFS() {
+		// TODO Auto-generated method stub
+		int count = this.goThroughBFS();
+		if (count == this.nodes.length) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isConnectedDFS() {
+		// TODO Auto-generated method stub
+		int count = this.goThroughDFS();
+		if (count == this.nodes.length) {
+			return true;
+		}
+		return false;
+	}
 	
 }
