@@ -137,4 +137,71 @@ public class GraphNodeNonDir {
 		return false;
 	}
 	
+
+	public boolean hasRingBFS() {
+		// TODO Auto-generated method stub
+		boolean[] included = new boolean[this.nodes.length];
+		for (int i=0;i<included.length;i++) {
+			included[i] = false;
+		}
+		
+		ArrayList<Node[]> current = new ArrayList<>();
+		ArrayList<Node[]> next = new ArrayList<>();
+		
+		Node[] dirNode = {this.nodes[0], null};
+		current.add(dirNode);
+		included[0] = true;
+		
+		
+		while (!current.isEmpty()) {
+			for (Node[] dnode:current) {
+				for (Node n: dnode[0].getNextNodes()) {
+					if (included[n.id] && n!=dnode[1])
+						return true;
+					else {
+						dirNode = new Node[2];
+						dirNode[0] = n;
+						dirNode[1] = dnode[0]; 
+						next.add(dirNode);
+						included[n.id] = true;
+					}
+					
+				}
+			}
+			current = next;
+			next = new ArrayList<>();
+		}
+		return false;
+	}
+
+	public boolean hasRingDFS() {
+		// TODO Auto-generated method stub
+		boolean[] included = new boolean[this.nodes.length];
+		for (int i=0;i<included.length;i++) {
+			included[i] = false;
+		}
+		
+		return hasRingDFS(this.nodes[0], null ,included);
+	}
+
+	private boolean hasRingDFS(Node node, Node comingNode, boolean[] included) {
+		// TODO Auto-generated method stub
+		if (included[node.id])
+			return true;
+		included[node.id] = true;
+		for (Node n:node.getNextNodes()) {
+			if (included[n.id] && n!=comingNode) {
+				return true;
+			}
+			
+			if (hasRingDFS(n, node, included))
+				return true;
+		}
+		
+		return false;
+		
+	}
+	
 }
+
+
